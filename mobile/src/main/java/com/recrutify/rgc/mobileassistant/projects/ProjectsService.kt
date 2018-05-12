@@ -2,12 +2,7 @@ package com.recrutify.rgc.mobileassistant.projects
 
 import android.arch.lifecycle.LiveData
 import com.recrutify.rgc.mobileassistant.common.ApiResponse
-import com.recrutify.rgc.mobileassistant.login.LoggedUser
-import com.recrutify.rgc.mobileassistant.login.LoginRequest
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ProjectsService {
     @POST
@@ -17,6 +12,9 @@ interface ProjectsService {
             @Field("limit") limit: Int
     )
 
-    @POST("/projects")
-    fun getProjects(@Body filter: String): LiveData<ApiResponse<List<Project>>>
+    @GET("/project")
+    fun getProjects(
+            @Query("page") page: Int,
+            @Query("statuses") statuses: List<Int>,
+            @Query("userAssigned") userAssigned: Int): LiveData<ApiResponse<List<Project>>>
 }
