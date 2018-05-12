@@ -1,21 +1,19 @@
 package com.recrutify.rgc.mobileassistant.projects
 
+import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
+import android.util.Log
 import com.recrutify.rgc.mobileassistant.BaseActivity
-import com.recrutify.rgc.mobileassistant.BaseActivity_MembersInjector
+import com.recrutify.rgc.mobileassistant.R
+import com.recrutify.rgc.mobileassistant.common.CustomPagerAdapter
 import kotlinx.android.synthetic.main.activity_projects.*
 import kotlinx.android.synthetic.main.app_bar_projects.*
-import com.recrutify.rgc.mobileassistant.R
-import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.content_projects.*
 
 class ProjectsActivity : BaseActivity() {
+
+    var pagerAdapter: CustomPagerAdapter?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +28,18 @@ class ProjectsActivity : BaseActivity() {
 
         nav_view.setCheckedItem(R.id.nav_projects)
         nav_view.setNavigationItemSelectedListener(this)
+
+
+        pagerAdapter = CustomPagerAdapter(this.supportFragmentManager)
+
+        pagerAdapter!!.addPage("List", ProjectListFragment())
+
+        projects_view_pager.adapter = pagerAdapter
     }
 
+    override fun onFragmentInteraction(uri: Uri) {
+        super.onFragmentInteraction(uri)
+
+        Log.d("ProjectsActivity", "onFragmentInteraction ${uri}")
+    }
 }

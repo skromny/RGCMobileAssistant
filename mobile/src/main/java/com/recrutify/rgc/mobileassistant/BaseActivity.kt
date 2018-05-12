@@ -1,5 +1,6 @@
 package com.recrutify.rgc.mobileassistant
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -14,9 +15,14 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import com.recrutify.rgc.mobileassistant.candidates.CandidatesActivity
+import com.recrutify.rgc.mobileassistant.common.OnFragmentInteractionListener
 import com.recrutify.rgc.mobileassistant.injection.ViewModelFactory
+import com.recrutify.rgc.mobileassistant.login.LoggedUser
 import com.recrutify.rgc.mobileassistant.login.LoginActivity
+import com.recrutify.rgc.mobileassistant.login.UserRepository
 import com.recrutify.rgc.mobileassistant.projects.ProjectsActivity
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_login.*
@@ -26,14 +32,19 @@ import javax.inject.Inject
 /**
  * Created by arturnowak on 12.02.2018.
  */
-open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    @Inject
+    lateinit var userRepository: UserRepository
+
     val drawerLayout : DrawerLayout? = null
     val actionBarDrawerToggle : ActionBarDrawerToggle? = null
     //val toolbar : Toolbar? = null
+
+    lateinit var loggedUser : LoggedUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,17 +52,25 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         //Dagger
         AndroidInjection.inject(this)
 
-        val sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        userRepository.getLoggedUser().observe(this, Observer { user ->
 
-        val email = sharedPreferences.getString("email", null)
-        val password = sharedPreferences.getString("password", null)
+            if (user == null) {
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                finish()
+                startActivity(intent)
+            }
+            else
+                loggedUser = user
+        })
 
-        if(email == null || password == null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            finish()
-            startActivity(intent)
-        }
+//        val sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+//
+//        val email = sharedPreferences.getString("email", null)
+//        val password = sharedPreferences.getString("password", null)
+//
+//        if(email == null || password == null) {
+//        }
 
 //        setContentView(R.layout.activity_main)
 //        setSupportActionBar(toolbar)
@@ -68,6 +87,10 @@ open class BaseActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
+    }
+
+    override fun onFragmentInteraction(uri: Uri) {
+        Log.d("BaseActivity", "onFragmentInteraction ${uri}")
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

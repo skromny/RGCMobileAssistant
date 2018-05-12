@@ -23,18 +23,38 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingComponent
+import android.databinding.DataBindingUtil
+import android.util.Log
 
 import kotlinx.android.synthetic.main.activity_login.*
 import com.recrutify.rgc.mobileassistant.MainActivity
+import com.recrutify.rgc.mobileassistant.MainViewModel
+import com.recrutify.rgc.mobileassistant.Model.Status
 import com.recrutify.rgc.mobileassistant.R
+import com.recrutify.rgc.mobileassistant.common.ApiErrorResponse
+import com.recrutify.rgc.mobileassistant.common.ApiSuccessResponse
+import com.recrutify.rgc.mobileassistant.databinding.ActivityLoginBinding
+import com.recrutify.rgc.mobileassistant.injection.ViewModelFactory
 import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 /**
  * A login screen that offers login via email/password.
  */
 class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    lateinit var viewModel: LoginViewModel
+
+    lateinit var binding: ActivityLoginBinding
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -46,10 +66,18 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         //Dagger
         AndroidInjection.inject(this)
 
-        setContentView(R.layout.activity_login)
-        // Set up the login form.
-        populateAutoComplete()
-        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+
+        binding.emailSignInButton.setOnClickListener({
+            Log.d("LOGIN", "Login START ---")
+            showProgress(true)
+            viewModel.login()
+            Log.d("LOGIN", "Login DONE ---")
+        })
+
+        binding.password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
             if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                 attemptLogin()
                 return@OnEditorActionListener true
@@ -57,7 +85,47 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             false
         })
 
-        email_sign_in_button.setOnClickListener { attemptLogin() }
+        binding.viewModel = viewModel
+
+        viewModel.user.observe(this, Observer {
+
+            showProgress(false)
+
+            it?.let {
+                if(it.status == Status.SUCCESS) {
+                    Log.d("LOGIN", it.data?.accountId.toString())
+                    Log.d("LOGIN", it.data?.fullName)
+                    Log.d("LOGIN", it.data?.avatarLink?.orEmpty())
+
+                    val intent = Intent(getApplicationContext(), MainActivity::class.java)
+                    finish()
+                    startActivity(intent);
+                }
+
+            }
+        })
+//        viewModel.loginResponse.observe(this, Observer {
+//            it?.let {
+//                if(it is ApiSuccessResponse) {
+//                    val r = it as ApiSuccessResponse
+//                    val body = r.body
+//                }
+//            }
+//        })
+        //setContentView(R.layout.activity_login)
+
+
+        // Set up the login form.
+        populateAutoComplete()
+//        password.setOnEditorActionListener(TextView.OnEditorActionListener { _, id, _ ->
+//            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+//                attemptLogin()
+//                return@OnEditorActionListener true
+//            }
+//            false
+//        })
+
+        //email_sign_in_button.setOnClickListener { attemptLogin() }
     }
 
     private fun populateAutoComplete() {

@@ -8,20 +8,10 @@ import android.os.Bundle
 import android.R.attr.targetSdkVersion
 import android.arch.lifecycle.ViewModelProviders
 import android.provider.Settings
-import android.support.design.widget.Snackbar
-import android.support.design.widget.NavigationView
 import android.support.v4.content.PermissionChecker
-import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import com.recrutify.rgc.mobileassistant.injection.MainViewModel
-import com.recrutify.rgc.mobileassistant.injection.ViewModelFactory
-import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
