@@ -24,5 +24,5 @@ internal abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ProjectsListViewModel::class)
-    abstract fun bindMainViewModel(viewModel : ProjectsListViewModel) : ViewModel
+    abstract fun bindProjectListViewModel(viewModel : ProjectsListViewModel) : ViewModel
 }
