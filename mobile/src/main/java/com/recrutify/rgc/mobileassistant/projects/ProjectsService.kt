@@ -13,8 +13,15 @@ interface ProjectsService {
     )
 
     @GET("/project")
-    fun getProjects(
+    fun getAllProjects(
             @Query("page") page: Int,
             @Query("statuses") statuses: List<Int>,
-            @Query("userAssigned") userAssigned: Int): LiveData<ApiResponse<List<Project>>>
+            @Query("userAssigned") userAssigned: Int?): LiveData<ApiResponse<List<Project>>>
+
+    @GET("/project")
+    fun getProjects(
+            @Query("query") query: String,
+            @Query("statuses") statuses: List<Int>,
+            @Query("userAssigned") userAssigned: Int?): LiveData<ApiResponse<List<Project>>>
+
 }

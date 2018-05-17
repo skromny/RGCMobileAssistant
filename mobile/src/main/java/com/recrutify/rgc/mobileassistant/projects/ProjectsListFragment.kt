@@ -1,15 +1,24 @@
 package com.recrutify.rgc.mobileassistant.projects
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.databinding.DataBindingComponent
+import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.recrutify.rgc.mobileassistant.AppExecutors
 
 import com.recrutify.rgc.mobileassistant.R
 import com.recrutify.rgc.mobileassistant.common.OnFragmentInteractionListener
+import com.recrutify.rgc.mobileassistant.common.autoCleared
+import com.recrutify.rgc.mobileassistant.databinding.FragmentProjectListBinding
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +35,21 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class ProjectListFragment : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var projectListViewModel: ProjectsListViewModel
+
+    @Inject
+    lateinit var appExecutors: AppExecutors
+
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+
+    var binding by autoCleared<FragmentProjectListBinding>()
+
+    var adapter by autoCleared<ProjectsListAdapter>()
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -42,7 +66,35 @@ class ProjectListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project_list, container, false)
+        //return inflater.inflate(R.layout.fragment_project_list, container, false)
+        binding = DataBindingUtil.inflate<FragmentProjectListBinding>(
+                inflater,
+                R.layout.fragment_project_list,
+                container,
+                false,
+                dataBindingComponent
+        )
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        projectListViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(ProjectsListViewModel::class.java)
+
+        val _adapter = ProjectsListAdapter(
+                dataBindingComponent = dataBindingComponent,
+                appExecutors = appExecutors) { project ->
+
+                    Log.d("PROJECT_L", "on: ${project.id}")
+                }
+
+        binding.projectList.adapter = _adapter
+
+        adapter = _adapter
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -64,25 +116,6 @@ class ProjectListFragment : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-
-    //!!!! Przeniesony do common
-
-//    interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        fun onFragmentInteraction(uri: Uri)
-//    }
-
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -102,4 +135,31 @@ class ProjectListFragment : Fragment() {
                     }
                 }
     }
+
+
+
+
+
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     *
+     *
+     * See the Android Training lesson [Communicating with Other Fragments]
+     * (http://developer.android.com/training/basics/fragments/communicating.html)
+     * for more information.
+     */
+
+    //!!!! Przeniesony do common
+
+//    interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        fun onFragmentInteraction(uri: Uri)
+//    }
+
+
 }

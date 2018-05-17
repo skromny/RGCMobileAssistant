@@ -2,7 +2,9 @@ package com.recrutify.rgc.mobileassistant.projects
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
+import android.arch.persistence.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.recrutify.rgc.mobileassistant.db.ProjectTypeConverters
 
 @Entity(
         indices = [
@@ -12,6 +14,7 @@ import com.google.gson.annotations.SerializedName
             "id"
         ]
 )
+@TypeConverters(ProjectTypeConverters::class)
 data class Project (
     val accountId: Int,
     val clientRate: Int?,
