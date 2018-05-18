@@ -2,16 +2,24 @@ package com.recrutify.rgc.mobileassistant.projects
 
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBarDrawerToggle
 import android.util.Log
 import com.recrutify.rgc.mobileassistant.BaseActivity
 import com.recrutify.rgc.mobileassistant.R
 import com.recrutify.rgc.mobileassistant.common.CustomPagerAdapter
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_projects.*
 import kotlinx.android.synthetic.main.app_bar_projects.*
 import kotlinx.android.synthetic.main.content_projects.*
+import javax.inject.Inject
 
-class ProjectsActivity : BaseActivity() {
+class ProjectsActivity : BaseActivity(), HasSupportFragmentInjector {
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     var pagerAdapter: CustomPagerAdapter?=null
 
@@ -32,7 +40,7 @@ class ProjectsActivity : BaseActivity() {
 
         pagerAdapter = CustomPagerAdapter(this.supportFragmentManager)
 
-        pagerAdapter!!.addPage("List", ProjectListFragment())
+        pagerAdapter!!.addPage("List", ProjectsListFragment())
 
         projects_view_pager.adapter = pagerAdapter
     }
@@ -42,4 +50,7 @@ class ProjectsActivity : BaseActivity() {
 
         Log.d("ProjectsActivity", "onFragmentInteraction ${uri}")
     }
+
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
+
 }

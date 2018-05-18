@@ -1,5 +1,6 @@
 package com.recrutify.rgc.mobileassistant.projects
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
@@ -18,6 +19,7 @@ import com.recrutify.rgc.mobileassistant.R
 import com.recrutify.rgc.mobileassistant.common.OnFragmentInteractionListener
 import com.recrutify.rgc.mobileassistant.common.autoCleared
 import com.recrutify.rgc.mobileassistant.databinding.FragmentProjectListBinding
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,13 +30,13 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [ProjectListFragment.OnFragmentInteractionListener] interface
+ * [ProjectsListFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [ProjectListFragment.newInstance] factory method to
+ * Use the [ProjectsListFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class ProjectListFragment : Fragment() {
+class ProjectsListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -65,6 +67,7 @@ class ProjectListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_project_list, container, false)
         binding = DataBindingUtil.inflate<FragmentProjectListBinding>(
@@ -80,9 +83,18 @@ class ProjectListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        AndroidSupportInjection.inject(this)
 
         projectListViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ProjectsListViewModel::class.java)
+
+        projectListViewModel.results.observe(this, Observer {
+            it?.let {
+
+            }
+        })
+
+        projectListViewModel.setQuery("-")
 
         val _adapter = ProjectsListAdapter(
                 dataBindingComponent = dataBindingComponent,
@@ -104,6 +116,7 @@ class ProjectListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
@@ -123,12 +136,12 @@ class ProjectListFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ProjectListFragment.
+         * @return A new instance of fragment ProjectsListFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                ProjectListFragment().apply {
+                ProjectsListFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)

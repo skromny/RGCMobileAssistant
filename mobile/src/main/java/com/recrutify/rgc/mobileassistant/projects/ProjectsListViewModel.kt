@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
-import com.bumptech.glide.load.engine.Resource
+import com.recrutify.rgc.mobileassistant.Model.Resource
 import com.recrutify.rgc.mobileassistant.common.AbsentLiveData
 import javax.inject.Inject
 
@@ -16,10 +16,14 @@ class ProjectsListViewModel @Inject constructor(projectsRepository: ProjectsRepo
     val results: LiveData<Resource<List<Project>>> = Transformations
             .switchMap(query) { search ->
 
-                //if(search.isNullOrBlank())
+                if(search.isNullOrBlank())
                     AbsentLiveData.create<Resource<List<Project>>>()
-                //else
-                //    projectsRepository.search(search)
+                else
+                    projectsRepository.search(search)
             }
+
+    fun setQuery(_query: String) {
+        query.value = _query
+    }
 
 }

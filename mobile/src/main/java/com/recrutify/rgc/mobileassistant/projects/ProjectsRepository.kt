@@ -5,16 +5,19 @@ import android.arch.lifecycle.Transformations
 import com.recrutify.rgc.mobileassistant.AppExecutors
 import com.recrutify.rgc.mobileassistant.Model.Resource
 import com.recrutify.rgc.mobileassistant.common.AbsentLiveData
+import com.recrutify.rgc.mobileassistant.common.ApiResponse
 import com.recrutify.rgc.mobileassistant.common.NetworkBoundResource
 import com.recrutify.rgc.mobileassistant.db.LocalDB
 import com.recrutify.rgc.mobileassistant.db.ProjectsDao
+import com.recrutify.rgc.mobileassistant.db.UserDao
 import javax.inject.Inject
 
 class ProjectsRepository @Inject constructor(
     private val appExecutors: AppExecutors,
     private val projectsService: ProjectsService,
     private val db: LocalDB,
-    private val projectsDao: ProjectsDao) {
+    private val projectsDao: ProjectsDao,
+    private val userDao: UserDao) {
 
 
 
@@ -52,7 +55,13 @@ class ProjectsRepository @Inject constructor(
                 }
             }
 
-            override fun createCall() = projectsService.getAllProjects(1, listOf(), null)
+            override fun createCall() = Transformations.switchMap(userDao.getUser()) { user ->
+                    if(user != null) {
+                        projectsService.getAllProjects(mapOf(Pair("authorization", user.token)), 1, listOf(), null)
+                    }
+                    else
+                        AbsentLiveData.create()
+                }
 
 //            override fun processResponse(response: ApiSuccessResponse<RepoSearchResponse>)
 //                    : RepoSearchResponse {

@@ -14,6 +14,7 @@ interface ProjectsService {
 
     @GET("/project")
     fun getAllProjects(
+            @HeaderMap headers: Map<String, String>,
             @Query("page") page: Int,
             @Query("statuses") statuses: List<Int>,
             @Query("userAssigned") userAssigned: Int?): LiveData<ApiResponse<List<Project>>>

@@ -16,7 +16,7 @@ abstract class ActivityModule {
     @ContributesAndroidInjector
     internal abstract fun contributeLoginActivity(): LoginActivity
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [ProjectFragmentsModule::class])
     internal abstract fun contributeProjectsActivity(): ProjectsActivity
 
     @ContributesAndroidInjector
