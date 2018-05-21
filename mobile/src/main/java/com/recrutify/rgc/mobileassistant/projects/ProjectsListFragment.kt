@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.recrutify.rgc.mobileassistant.AppExecutors
+import com.recrutify.rgc.mobileassistant.Model.Status
 
 import com.recrutify.rgc.mobileassistant.R
 import com.recrutify.rgc.mobileassistant.common.OnFragmentInteractionListener
@@ -90,11 +91,22 @@ class ProjectsListFragment : Fragment() {
 
         projectListViewModel.results.observe(this, Observer {
             it?.let {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        Log.d("PROJECT_L", "SUCCESS")
+                        adapter.submitList(it.data)
+                        binding.executePendingBindings()
+                    }
+                    Status.LOADING -> {
+                        Log.d("PROJECT_L", "LOADING")
+                    }
+                    Status.ERROR -> {
+                        Log.d("PROJECT_L", "ERROR ${it.message}")
+                    }
+                }
 
             }
         })
-
-        projectListViewModel.setQuery("-")
 
         val _adapter = ProjectsListAdapter(
                 dataBindingComponent = dataBindingComponent,
@@ -107,6 +119,8 @@ class ProjectsListFragment : Fragment() {
 
         adapter = _adapter
 
+
+        projectListViewModel.setQuery("-")
     }
 
     // TODO: Rename method, update argument and hook method into UI event

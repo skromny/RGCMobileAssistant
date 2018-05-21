@@ -33,13 +33,12 @@ import android.util.Log
 
 import kotlinx.android.synthetic.main.activity_login.*
 import com.recrutify.rgc.mobileassistant.MainActivity
-import com.recrutify.rgc.mobileassistant.MainViewModel
 import com.recrutify.rgc.mobileassistant.Model.Status
 import com.recrutify.rgc.mobileassistant.R
-import com.recrutify.rgc.mobileassistant.common.ApiErrorResponse
-import com.recrutify.rgc.mobileassistant.common.ApiSuccessResponse
+import com.recrutify.rgc.mobileassistant.binding.DefaultBindingAdapters
 import com.recrutify.rgc.mobileassistant.databinding.ActivityLoginBinding
 import com.recrutify.rgc.mobileassistant.injection.ViewModelFactory
+import com.recrutify.rgc.mobileassistant.projects.FragmentBindingAdapters
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -67,6 +66,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         AndroidInjection.inject(this)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+//                , object: DataBindingComponent {
+//            val adapters = DefaultBindingAdapters()
+//            override fun getDefaultBindingAdapters() = adapters
+//
+//            override fun getFragmentBindingAdapters() = null
+//
+//        })
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
 

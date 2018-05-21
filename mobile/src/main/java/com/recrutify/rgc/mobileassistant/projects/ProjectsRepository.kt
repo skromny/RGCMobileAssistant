@@ -6,6 +6,7 @@ import com.recrutify.rgc.mobileassistant.AppExecutors
 import com.recrutify.rgc.mobileassistant.Model.Resource
 import com.recrutify.rgc.mobileassistant.common.AbsentLiveData
 import com.recrutify.rgc.mobileassistant.common.ApiResponse
+import com.recrutify.rgc.mobileassistant.common.ApiSuccessResponse
 import com.recrutify.rgc.mobileassistant.common.NetworkBoundResource
 import com.recrutify.rgc.mobileassistant.db.LocalDB
 import com.recrutify.rgc.mobileassistant.db.ProjectsDao
@@ -43,7 +44,7 @@ class ProjectsRepository @Inject constructor(
                 }
             }
 
-            override fun shouldFetch(data: List<Project>?) = data == null
+            override fun shouldFetch(data: List<Project>?) = true //data == null
 
             override fun loadFromDb(): LiveData<List<Project>> {
                 return Transformations.switchMap(projectsDao.search(query)) { searchData ->
@@ -63,12 +64,13 @@ class ProjectsRepository @Inject constructor(
                         AbsentLiveData.create()
                 }
 
-//            override fun processResponse(response: ApiSuccessResponse<RepoSearchResponse>)
-//                    : RepoSearchResponse {
-//                val body = response.body
-//                body.nextPage = response.nextPage
-//                return body
-//            }
+            override fun processResponse(response: ApiSuccessResponse<List<Project>>)
+                    : List<Project> {
+
+                val body = response.body
+
+                return body
+            }
         }.asLiveData()
     }
 }
