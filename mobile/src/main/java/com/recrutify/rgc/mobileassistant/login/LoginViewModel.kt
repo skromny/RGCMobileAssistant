@@ -22,8 +22,8 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
     val password: ObservableField<String> = ObservableField()
 
     init {
-        email.set("artur.nowak@ascendious.com")
-        password.set("Haslo1234")
+        email.set("artur.aksamit@ascendious.com")
+        password.set("aaksamit")
 
         //loginResponse = authService.login(LoginRequest("artur.nowak@ascendious.com", "Haslo1234"))
 

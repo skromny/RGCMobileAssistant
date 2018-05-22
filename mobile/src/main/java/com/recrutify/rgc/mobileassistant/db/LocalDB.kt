@@ -2,6 +2,7 @@ package com.recrutify.rgc.mobileassistant.db
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
+import com.recrutify.rgc.mobileassistant.Model.Label
 import com.recrutify.rgc.mobileassistant.login.LoggedUser
 import com.recrutify.rgc.mobileassistant.projects.Project
 import com.recrutify.rgc.mobileassistant.projects.ProjectsSearchResult
@@ -9,6 +10,7 @@ import com.recrutify.rgc.mobileassistant.projects.ProjectsSearchResult
 @Database(
     entities = [
         LoggedUser::class,
+        Label::class,
         Project::class,
         ProjectsSearchResult::class
     ],

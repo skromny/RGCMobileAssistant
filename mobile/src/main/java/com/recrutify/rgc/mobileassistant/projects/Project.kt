@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.recrutify.rgc.mobileassistant.Model.Label
 import com.recrutify.rgc.mobileassistant.db.ProjectTypeConverters
 
 @Entity(
@@ -38,7 +39,7 @@ data class Project (
     val incomeLow: Int?,
     val isFavourite: Boolean,
     val isPublic: Boolean?,
-    val labels: List<String>,
+    val labels: List<Label>,
     val lastUpdate: String?,
     val location: String?,
     val name: String,

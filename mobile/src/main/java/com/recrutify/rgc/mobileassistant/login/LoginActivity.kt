@@ -35,7 +35,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 import com.recrutify.rgc.mobileassistant.MainActivity
 import com.recrutify.rgc.mobileassistant.Model.Status
 import com.recrutify.rgc.mobileassistant.R
-import com.recrutify.rgc.mobileassistant.binding.DefaultBindingAdapters
 import com.recrutify.rgc.mobileassistant.databinding.ActivityLoginBinding
 import com.recrutify.rgc.mobileassistant.injection.ViewModelFactory
 import com.recrutify.rgc.mobileassistant.projects.FragmentBindingAdapters
