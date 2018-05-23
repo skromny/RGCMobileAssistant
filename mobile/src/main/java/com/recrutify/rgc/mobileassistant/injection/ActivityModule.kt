@@ -19,7 +19,7 @@ abstract class ActivityModule {
     @ContributesAndroidInjector(modules = [ProjectFragmentsModule::class])
     internal abstract fun contributeProjectsActivity(): ProjectsActivity
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [CandidateFragmentsModule::class])
     internal abstract fun contributeCandidatesActivity(): CandidatesActivity
 
 }

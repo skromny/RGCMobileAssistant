@@ -26,18 +26,12 @@ abstract class ProjectsDao {
     @Query("SELECT * FROM ProjectsSearchResult WHERE `query` = :query")
     abstract fun search(query: String): LiveData<ProjectsSearchResult>
 
-//    @Query("SELECT * FROM LoggedUser LIMIT 1")
-//    fun getUser() : LiveData<LoggedUser>
-
-    @Query("DELETE FROM LoggedUser")
-    abstract fun removeLoggedUser()
-
-    fun loadOrdered(repoIds: List<Int>): LiveData<List<Project>> {
+    fun loadOrdered(projectIds: List<Int>): LiveData<List<Project>> {
         val order = SparseIntArray()
-        repoIds.withIndex().forEach {
+        projectIds.withIndex().forEach {
             order.put(it.value, it.index)
         }
-        return Transformations.map(loadById(repoIds)) { repositories ->
+        return Transformations.map(loadById(projectIds)) { repositories ->
             Collections.sort(repositories) { r1, r2 ->
                 val pos1 = order.get(r1.id)
                 val pos2 = order.get(r2.id)
@@ -47,7 +41,7 @@ abstract class ProjectsDao {
         }
     }
 
-    @Query("SELECT * FROM Project WHERE id in (:repoIds)")
-    protected abstract fun loadById(repoIds: List<Int>): LiveData<List<Project>>
+    @Query("SELECT * FROM Project WHERE id in (:projectIds)")
+    protected abstract fun loadById(projectIds: List<Int>): LiveData<List<Project>>
 
 }

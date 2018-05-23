@@ -37,7 +37,6 @@ import com.recrutify.rgc.mobileassistant.Model.Status
 import com.recrutify.rgc.mobileassistant.R
 import com.recrutify.rgc.mobileassistant.databinding.ActivityLoginBinding
 import com.recrutify.rgc.mobileassistant.injection.ViewModelFactory
-import com.recrutify.rgc.mobileassistant.projects.FragmentBindingAdapters
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 

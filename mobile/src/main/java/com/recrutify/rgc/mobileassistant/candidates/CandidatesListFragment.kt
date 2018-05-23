@@ -1,4 +1,4 @@
-package com.recrutify.rgc.mobileassistant.projects
+package com.recrutify.rgc.mobileassistant.candidates
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
@@ -20,9 +20,7 @@ import com.recrutify.rgc.mobileassistant.R
 import com.recrutify.rgc.mobileassistant.common.LabelsAdapter
 import com.recrutify.rgc.mobileassistant.common.OnFragmentInteractionListener
 import com.recrutify.rgc.mobileassistant.common.autoCleared
-import com.recrutify.rgc.mobileassistant.databinding.FragmentProjectsListBinding
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
+import com.recrutify.rgc.mobileassistant.databinding.FragmentCandidatesListBinding
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -34,13 +32,13 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [ProjectsListFragment.OnFragmentInteractionListener] interface
+ * [CandidatesListFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [ProjectsListFragment.newInstance] factory method to
+ * Use the [CandidatesListFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class ProjectsListFragment : Fragment() {
+class CandidatesListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -51,14 +49,13 @@ class ProjectsListFragment : Fragment() {
     @Inject
     lateinit var labelsAdapter: LabelsAdapter
 
-    lateinit var projectListViewModel: ProjectsListViewModel
+    lateinit var candidatesListViewModel: CandidatesListViewModel
 
     lateinit var dataBindingComponent: DataBindingComponent
 
-    var binding by autoCleared<FragmentProjectsListBinding>()
+    var binding by autoCleared<FragmentCandidatesListBinding>()
 
-    var adapter by autoCleared<ProjectsListAdapter>()
-
+    var adapter by autoCleared<CandidatesListAdapter>()
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -76,12 +73,12 @@ class ProjectsListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         dataBindingComponent = FragmentDataBindingComponent(this, labelsAdapter)
-
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_projects_list, container, false)
-        binding = DataBindingUtil.inflate<FragmentProjectsListBinding>(
+
+        binding = DataBindingUtil.inflate<FragmentCandidatesListBinding>(
                 inflater,
-                R.layout.fragment_projects_list,
+                R.layout.fragment_candidates_list,
                 container,
                 false,
                 dataBindingComponent
@@ -90,49 +87,48 @@ class ProjectsListFragment : Fragment() {
         return binding.root
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
+    fun onButtonPressed(uri: Uri) {
+        listener?.onFragmentInteraction(uri)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        projectListViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(ProjectsListViewModel::class.java)
+        candidatesListViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(CandidatesListViewModel::class.java)
 
-        projectListViewModel.results.observe(this, Observer {
+        candidatesListViewModel.results.observe(this, Observer {
             it?.let {
                 when (it.status) {
                     Status.SUCCESS -> {
-                        Log.d("PROJECT_L", "SUCCESS")
+                        Log.d("CANDIDATE_L", "SUCCESS")
                         adapter.submitList(it.data)
                         binding.executePendingBindings()
                     }
                     Status.LOADING -> {
-                        Log.d("PROJECT_L", "LOADING")
+                        Log.d("CANDIDATE_L", "LOADING")
                     }
                     Status.ERROR -> {
-                        Log.d("PROJECT_L", "ERROR ${it.message}")
+                        Log.d("CANDIDATE_L", "ERROR ${it.message}")
                     }
                 }
 
             }
         })
 
-        val _adapter = ProjectsListAdapter(
+        val _adapter = CandidatesListAdapter (
                 dataBindingComponent = dataBindingComponent,
                 appExecutors = appExecutors) { project ->
 
-                    Log.d("PROJECT_L", "on: ${project.id}")
-                }
+            Log.d("PROJECT_L", "on: ${project.id}")
+        }
 
-        binding.projectList.adapter = _adapter
+        binding.candidateList.adapter = _adapter
 
         adapter = _adapter
 
-
-        projectListViewModel.setQuery("-")
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+        candidatesListViewModel.setQuery("-")
     }
 
     override fun onAttach(context: Context) {
@@ -159,43 +155,16 @@ class ProjectsListFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ProjectsListFragment.
+         * @return A new instance of fragment CandidatesListFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                ProjectsListFragment().apply {
+                CandidatesListFragment().apply {
                     arguments = Bundle().apply {
                         putString(ARG_PARAM1, param1)
                         putString(ARG_PARAM2, param2)
                     }
                 }
     }
-
-
-
-
-
-
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-
-    //!!!! Przeniesony do common
-
-//    interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        fun onFragmentInteraction(uri: Uri)
-//    }
-
-
 }

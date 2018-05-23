@@ -2,7 +2,11 @@ package com.recrutify.rgc.mobileassistant.injection
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import com.recrutify.rgc.mobileassistant.candidates.Candidate
+import com.recrutify.rgc.mobileassistant.candidates.CandidatesService
+import com.recrutify.rgc.mobileassistant.common.LabelsAdapter
 import com.recrutify.rgc.mobileassistant.common.LiveDataCallAdapterFactory
+import com.recrutify.rgc.mobileassistant.db.CandidatesDao
 import com.recrutify.rgc.mobileassistant.db.LocalDB
 import com.recrutify.rgc.mobileassistant.db.ProjectsDao
 import com.recrutify.rgc.mobileassistant.db.UserDao
@@ -41,6 +45,17 @@ internal class AppModule {
 
     @Singleton
     @Provides
+    fun provideCandidatesService(): CandidatesService {
+        return Retrofit.Builder()
+                .baseUrl("https://api.recrutify.io")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory())
+                .build()
+                .create(CandidatesService::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideDb(app: Application): LocalDB {
         return Room
                 .databaseBuilder(app, LocalDB::class.java, "rgcmain.db")
@@ -56,7 +71,19 @@ internal class AppModule {
 
     @Singleton
     @Provides
+    fun provideLabelAdapter(): LabelsAdapter {
+        return LabelsAdapter()
+    }
+
+    @Singleton
+    @Provides
     fun provideProjectsDao(db: LocalDB): ProjectsDao {
         return db.projectsDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCandidatesDao(db: LocalDB): CandidatesDao {
+        return db.candidatesDao()
     }
 }

@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.recrutify.rgc.mobileassistant.Model.Label
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ProjectTypeConverters {
+object CommonTypeConverters {
     @TypeConverter
     @JvmStatic
     fun stringToIntList(data: String?): List<Int>? {

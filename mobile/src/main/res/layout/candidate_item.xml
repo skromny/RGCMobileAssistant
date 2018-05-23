@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="project"
-            type="com.recrutify.rgc.mobileassistant.projects.Project"/>
+            name="candidate"
+            type="com.recrutify.rgc.mobileassistant.candidates.Candidate"/>
     </data>
 
     <android.support.v7.widget.CardView
@@ -28,23 +28,6 @@
                 android:paddingRight="12dp">
 
                 <ImageView
-                    android:id="@+id/ic_status"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_gravity="center_vertical"
-                    app:projectStatusIcon="@{project.statusId}"
-                    tools:src="@drawable/ic_in_progress" />
-
-                <TextView
-                    android:id="@+id/tv_project_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    app:projectStatusText="@{project.statusId}"
-                    android:textSize="12sp"
-                    tools:text="Aktywny" />
-
-                <ImageView
                     android:id="@+id/ic_calendar"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
@@ -59,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
-                    app:normalizedDateTime="@{project.creationTime}"
+                    app:normalizedDateTime="@{candidate.creationTime}"
                     android:textSize="12sp"
                     tools:text="2017-05-01 12:57:32" />
 
@@ -74,14 +57,14 @@
                     tools:src="@drawable/ic_pound_box" />
 
                 <TextView
-                    android:id="@+id/tv_reference"
+                    android:id="@+id/ic_source"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginLeft="2dp"
-                    android:text="@{project.referenceId}"
                     android:textAlignment="gravity"
                     android:textSize="12sp"
+                    app:sourceName="@{candidate.sourceId}"
                     tools:text="12322233" />
 
             </android.support.v7.widget.LinearLayoutCompat>
@@ -94,41 +77,14 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/tv_project_name"
+                    android:id="@+id/tv_candidate_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="@{project.name}"
+                    android:text="@{candidate.name}"
                     android:textColor="#666666"
                     android:textSize="24sp"
                     tools:text="qItemy a1" />
-
-            </android.support.v7.widget.LinearLayoutCompat>
-
-
-            <android.support.v7.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp">
-
-                <ImageView
-                    android:id="@+id/ic_company"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_factory"
-                    android:tint="#FF999999"
-                    tools:src="@drawable/ic_factory" />
-
-                <TextView
-                    android:id="@+id/tv_company_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="@{project.companyName}"
-                    android:textSize="16sp"
-                    android:textColor="#FF999999"
-                    tools:text="Company name" />
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -139,7 +95,7 @@
                 android:orientation="horizontal"
                 android:paddingLeft="6dp"
                 app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
-                app:labelsList="@{project.labels}"
+                app:labelsList="@{candidate.labels}"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="8dp" />
 

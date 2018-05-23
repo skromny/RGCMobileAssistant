@@ -14,14 +14,7 @@ import net.danlew.android.joda.JodaTimeAndroid
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
-
-    val labelsAdapter = LabelsAdapter()
-
-    @BindingAdapter("imageUrl")
-    fun bindImage(imageView: ImageView, url: String?) {
-        Glide.with(fragment).load(url).into(imageView)
-    }
+class ProjectBindingAdapters @Inject constructor(val fragment: Fragment) {
 
     @BindingAdapter("app:projectStatusText")
     fun setStatusTextResource(textView: TextView, resource: Int) {
@@ -50,11 +43,4 @@ class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
 
     }
 
-    @BindingAdapter("app:labelsList")
-    fun setLabels(recyclerView: RecyclerView, resource: List<Label>) {
-        Log.d("labelsList", "RESID: ${resource.size}")
-
-        labelsAdapter.updateList(resource)
-        recyclerView.adapter = labelsAdapter
-    }
 }

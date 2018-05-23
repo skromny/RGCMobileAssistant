@@ -8,17 +8,17 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="8dp"
         android:orientation="vertical"
-        tools:context=".projects.ProjectsListFragment">
+        tools:context=".candidates.CandidatesListFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <android.support.v7.widget.SearchView
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ProjectListFragment" />
+            android:text="CandidateListFragment" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/project_list"
+            android:id="@+id/candidate_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="LinearLayoutManager"
@@ -26,7 +26,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_bar"
-            tools:listitem="@layout/project_item" />
+            tools:listitem="@layout/candidate_item" />
 
     </android.support.constraint.ConstraintLayout>
 

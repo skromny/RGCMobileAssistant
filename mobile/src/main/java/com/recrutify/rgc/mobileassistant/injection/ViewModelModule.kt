@@ -3,6 +3,7 @@ package com.recrutify.rgc.mobileassistant.injection
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.recrutify.rgc.mobileassistant.MainViewModel
+import com.recrutify.rgc.mobileassistant.candidates.CandidatesListViewModel
 import com.recrutify.rgc.mobileassistant.login.LoginViewModel
 import com.recrutify.rgc.mobileassistant.projects.ProjectsListViewModel
 import dagger.Binds
@@ -26,6 +27,11 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProjectsListViewModel::class)
     abstract fun bindProjectListViewModel(viewModel : ProjectsListViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CandidatesListViewModel::class)
+    abstract fun bindCandidateListViewModel(viewModel : CandidatesListViewModel) : ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

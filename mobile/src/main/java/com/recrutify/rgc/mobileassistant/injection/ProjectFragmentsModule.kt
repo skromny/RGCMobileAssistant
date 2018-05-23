@@ -8,6 +8,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ProjectFragmentsModule {
     @ContributesAndroidInjector
-    abstract fun contributeProjectListFragment(): ProjectsListFragment
+    abstract fun contributeProjectsListFragment(): ProjectsListFragment
 
 }

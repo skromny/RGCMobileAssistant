@@ -8,12 +8,11 @@ import android.util.Log
 import com.recrutify.rgc.mobileassistant.BaseActivity
 import com.recrutify.rgc.mobileassistant.R
 import com.recrutify.rgc.mobileassistant.common.CustomPagerAdapter
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.activity_projects.*
-import kotlinx.android.synthetic.main.app_bar_projects.*
-import kotlinx.android.synthetic.main.content_projects.*
+import kotlinx.android.synthetic.main.activity_single_page.*
+import kotlinx.android.synthetic.main.app_bar_single_page.*
+import kotlinx.android.synthetic.main.single_page_content.*
 import javax.inject.Inject
 
 class ProjectsActivity : BaseActivity(), HasSupportFragmentInjector {
@@ -26,7 +25,7 @@ class ProjectsActivity : BaseActivity(), HasSupportFragmentInjector {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_projects)
+        setContentView(R.layout.activity_single_page)
         setSupportActionBar(toolbar)
 
         val toggle = ActionBarDrawerToggle(
@@ -42,7 +41,7 @@ class ProjectsActivity : BaseActivity(), HasSupportFragmentInjector {
 
         pagerAdapter!!.addPage("List", ProjectsListFragment())
 
-        projects_view_pager.adapter = pagerAdapter
+        view_pager.adapter = pagerAdapter
     }
 
     override fun onFragmentInteraction(uri: Uri) {

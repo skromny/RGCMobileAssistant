@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import com.recrutify.rgc.mobileassistant.Model.Label
 import kotlinx.android.synthetic.main.label_item.view.*
 import com.recrutify.rgc.mobileassistant.R
+import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class LabelsAdapter() : RecyclerView.Adapter<LabelsAdapter.ViewHolder>() {
 
     private var list = emptyList<Label>()
