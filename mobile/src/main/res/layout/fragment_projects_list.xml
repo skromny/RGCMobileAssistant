@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="8dp"
+        android:orientation="vertical"
+        tools:context=".projects.ProjectsListFragment">
+
+        <!-- TODO: Update blank fragment layout -->
+        <android.support.v7.widget.SearchView
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ProjectListFragment" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/project_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_bar"
+            tools:listitem="@layout/project_item" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
