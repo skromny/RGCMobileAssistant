@@ -9,6 +9,16 @@
     <color name="text_on_dark">#f2f2f2</color>
     <color name="overlayStandard">#DD333333</color>
 
+    <color name="c1">#4e80ff</color>
+    <color name="c2">#46dbe6</color>
+    <color name="c3">#995bcf</color>
+    <color name="c4">#bb6bd1</color>
+    <color name="c5">#f4586f</color>
+    <color name="c6">#c9646a</color>
+    <color name="c7">#ffa963</color>
+    <color name="c8">#84ce6b</color>
+    <color name="c9">#619b69</color>
+
     <!--<color name="colorPrimary">#1079b6</color>-->
     <!--<color name="colorPrimaryDD">#dd186ebf</color>-->
     <!--<color name="colorPrimaryBB">#bb187ec2</color>-->

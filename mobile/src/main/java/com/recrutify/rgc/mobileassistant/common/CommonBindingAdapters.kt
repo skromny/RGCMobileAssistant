@@ -14,9 +14,24 @@ import javax.inject.Inject
 
 class CommonBindingAdapters @Inject constructor(val fragment: Fragment, val labelsAdapter: LabelsAdapter) {
 
-    @BindingAdapter("imageUrl")
-    fun bindImage(imageView: ImageView, url: String?) {
-        Glide.with(fragment).load(url).into(imageView)
+    @BindingAdapter("imageUrl", "name")
+    fun bindImage(imageView: ImageView, url: String?, name: String) {
+        if(url != null)
+            Glide.with(fragment).load(url).into(imageView)
+        else {
+            when(name[0]) {
+                'a', 'A', 'j', 'J', 't', 'T' -> imageView.setImageResource(R.color.c1)
+                'b', 'B', 'k', 'K', 'u', 'U' -> imageView.setImageResource(R.color.c2)
+                'c', 'C', 'l', 'L', 'w', 'W' -> imageView.setImageResource(R.color.c3)
+                'd', 'D', 'm', 'M', 'x', 'X' -> imageView.setImageResource(R.color.c4)
+                'e', 'E', 'n', 'N', 'y', 'Y' -> imageView.setImageResource(R.color.c5)
+                'f', 'F', 'o', 'O', 'z', 'Z' -> imageView.setImageResource(R.color.c6)
+                'g', 'G', 'q', 'Q' -> imageView.setImageResource(R.color.c7)
+                'h', 'H', 'r', 'R' -> imageView.setImageResource(R.color.c8)
+                'i', 'I', 's', 'S' -> imageView.setImageResource(R.color.c9)
+                else ->  imageView.setImageResource(R.color.c8)
+            }
+        }
     }
 
     @BindingAdapter("app:normalizedDateTime")
