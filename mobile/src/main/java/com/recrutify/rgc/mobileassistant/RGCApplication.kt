@@ -3,6 +3,7 @@ package com.recrutify.rgc.mobileassistant
 import android.app.Activity
 import android.app.Application
 import android.databinding.DataBindingUtil
+import com.recrutify.rgc.mobileassistant.injection.AppInjector
 import com.recrutify.rgc.mobileassistant.injection.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -19,7 +20,9 @@ class RGCApplication : Application(), HasActivityInjector {
         super.onCreate()
 
         //setup Dagger-a
-        DaggerAppComponent.builder().application(this).build().inject(this)
+        //DaggerAppComponent.builder().application(this).build().inject(this)
+
+        AppInjector.init(this)
 
         JodaTimeAndroid.init(this);
     }

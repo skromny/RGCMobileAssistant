@@ -25,9 +25,23 @@ class CandidateBindingAdapters @Inject constructor(val fragment: Fragment) {
                 1 -> textView.setText("dodany ręcznie")
                 2 -> textView.setText("ręcznie z LinkedIn")
                 3 -> textView.setText("LinkedIn")
-                4 -> textView.setText("wewnętrzna aplikacja")
+                4 -> textView.setText("wewn. aplikacja")
             }
         }
     }
 
+    @BindingAdapter("app:sourceIcon")
+    fun setStatusImageResource(imageView: ImageView, resource: Int?) {
+        //Log.d("FragmentBindingAdapters", "RESID: ${resource}")
+
+        when(resource) {
+            1 -> imageView.setImageResource(R.drawable.ic_hand)
+            2, 3 -> imageView.setImageResource(R.drawable.ic_linkedin_blue)
+            4 -> imageView.setImageResource(R.drawable.ic_inside)
+            else -> {
+                imageView.setImageResource(R.drawable.ic_arrow_right_dimgreen)
+            }
+        }
+
+    }
 }

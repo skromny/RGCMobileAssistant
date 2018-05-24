@@ -71,12 +71,6 @@ internal class AppModule {
 
     @Singleton
     @Provides
-    fun provideLabelAdapter(): LabelsAdapter {
-        return LabelsAdapter()
-    }
-
-    @Singleton
-    @Provides
     fun provideProjectsDao(db: LocalDB): ProjectsDao {
         return db.projectsDao()
     }
@@ -85,5 +79,11 @@ internal class AppModule {
     @Provides
     fun provideCandidatesDao(db: LocalDB): CandidatesDao {
         return db.candidatesDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideLabelAdapter(): LabelsAdapter {
+        return LabelsAdapter()
     }
 }

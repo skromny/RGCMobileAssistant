@@ -17,10 +17,12 @@ import com.recrutify.rgc.mobileassistant.AppExecutors
 import com.recrutify.rgc.mobileassistant.Model.Status
 
 import com.recrutify.rgc.mobileassistant.R
+import com.recrutify.rgc.mobileassistant.common.FragmentDataBindingComponent
 import com.recrutify.rgc.mobileassistant.common.LabelsAdapter
 import com.recrutify.rgc.mobileassistant.common.OnFragmentInteractionListener
 import com.recrutify.rgc.mobileassistant.common.autoCleared
 import com.recrutify.rgc.mobileassistant.databinding.FragmentCandidatesListBinding
+import com.recrutify.rgc.mobileassistant.injection.Injectable
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -38,7 +40,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class CandidatesListFragment : Fragment() {
+class CandidatesListFragment : Fragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -133,8 +135,6 @@ class CandidatesListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        AndroidSupportInjection.inject(this)
 
         if (context is OnFragmentInteractionListener) {
             listener = context

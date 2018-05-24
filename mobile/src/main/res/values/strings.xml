@@ -6,6 +6,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_projects">Projects</string>
+    <string name="title_activity_project">Detale</string>
     <string name="title_activity_candidates">Candidates</string>
     <string name="title_activity_login">Sign in</string>
 

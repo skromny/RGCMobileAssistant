@@ -16,9 +16,6 @@
         app:cardCornerRadius="5dp"
         app:cardElevation="1dp" >
 
-
-
-
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +44,6 @@
                             android:id="@+id/ic_calendar"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:layout_marginLeft="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_calendar_plus"
                             android:tint="#FF999999"
@@ -63,14 +59,13 @@
                             tools:text="2017-05-01 12:57:32" />
 
                         <ImageView
-                            android:id="@+id/ic_reference"
+                            android:id="@+id/ic_source"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="12dp"
-                            android:src="@drawable/ic_pound_box"
-                            android:tint="#FF999999"
-                            tools:src="@drawable/ic_pound_box" />
+                            app:sourceIcon="@{candidate.sourceId}"
+                            tools:src="@drawable/ic_arrow_right_bold_box" />
 
                         <TextView
                             android:id="@+id/ic_source"
@@ -96,7 +91,6 @@
                             android:id="@+id/tv_candidate_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
                             android:text="@{candidate.name}"
                             android:textColor="#666666"
                             android:textSize="24sp"
@@ -109,7 +103,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="6dp"
                         app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
                         app:labelsList="@{candidate.labels}"
                         tools:layout_editor_absoluteX="8dp"

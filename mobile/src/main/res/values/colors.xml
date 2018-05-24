@@ -9,6 +9,9 @@
     <color name="text_on_dark">#f2f2f2</color>
     <color name="overlayStandard">#DD333333</color>
 
+    <color name="linkedInBlue">#0077B5</color>
+    <color name="lightTint">#FF999999</color>
+
     <color name="c1">#4e80ff</color>
     <color name="c2">#46dbe6</color>
     <color name="c3">#995bcf</color>

@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingComponent
 import android.databinding.DataBindingUtil
 import android.net.Uri
@@ -17,12 +18,12 @@ import com.recrutify.rgc.mobileassistant.AppExecutors
 import com.recrutify.rgc.mobileassistant.Model.Status
 
 import com.recrutify.rgc.mobileassistant.R
+import com.recrutify.rgc.mobileassistant.common.FragmentDataBindingComponent
 import com.recrutify.rgc.mobileassistant.common.LabelsAdapter
 import com.recrutify.rgc.mobileassistant.common.OnFragmentInteractionListener
 import com.recrutify.rgc.mobileassistant.common.autoCleared
 import com.recrutify.rgc.mobileassistant.databinding.FragmentProjectsListBinding
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
+import com.recrutify.rgc.mobileassistant.injection.Injectable
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -40,7 +41,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class ProjectsListFragment : Fragment() {
+class ProjectsListFragment : Fragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -119,6 +120,8 @@ class ProjectsListFragment : Fragment() {
                 dataBindingComponent = dataBindingComponent,
                 appExecutors = appExecutors) { project ->
 
+                    val intent = Intent(context, ProjectDetailActivity::class.java)
+                    startActivity(intent);
                     Log.d("PROJECT_L", "on: ${project.id}")
                 }
 
@@ -137,8 +140,6 @@ class ProjectsListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
-        AndroidSupportInjection.inject(this)
 
         if (context is OnFragmentInteractionListener) {
             listener = context
