@@ -21,10 +21,15 @@ class ProjectDetailActivity : BaseActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+    var projectId : Int = -1
     var pagerAdapter: CustomPagerAdapter?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        intent?.extras?.let {
+            projectId = it.getInt("PROJECT_ID")
+        }
 
         setContentView(R.layout.activity_pager_view)
         setSupportActionBar(toolbar)
@@ -39,7 +44,7 @@ class ProjectDetailActivity : BaseActivity(), HasSupportFragmentInjector {
 
         pagerAdapter = CustomPagerAdapter(this.supportFragmentManager)
 
-        pagerAdapter!!.addPage("Informacje", GeneralProjectDetailFragment())
+        pagerAdapter!!.addPage("Informacje", GeneralProjectDetailFragment.newInstance(projectId))
         pagerAdapter!!.addPage("Kandydaci", CandidatesProjectDetailFragment())
         pagerAdapter!!.addPage("Rekrutacja", RecruitmentProjectDetailFragment())
         pagerAdapter!!.addPage("Aktywności", ActivityProjectDetailFragment())

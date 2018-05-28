@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LabelsAdapter : RecyclerView.Adapter<LabelsAdapter.ViewHolder>() {
+class LabelsAdapter @Inject constructor() : RecyclerView.Adapter<LabelsAdapter.ViewHolder>() {
 
     private var list = emptyList<Label>()
 

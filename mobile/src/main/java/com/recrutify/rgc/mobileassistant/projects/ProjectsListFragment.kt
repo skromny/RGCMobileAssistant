@@ -121,6 +121,7 @@ class ProjectsListFragment : Fragment(), Injectable {
                 appExecutors = appExecutors) { project ->
 
                     val intent = Intent(context, ProjectDetailActivity::class.java)
+                    intent.putExtra("PROJECT_ID", project.id)
                     startActivity(intent);
                     Log.d("PROJECT_L", "on: ${project.id}")
                 }

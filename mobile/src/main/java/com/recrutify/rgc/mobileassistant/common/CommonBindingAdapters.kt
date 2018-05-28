@@ -2,8 +2,11 @@ package com.recrutify.rgc.mobileassistant.common
 
 import android.databinding.BindingAdapter
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -34,15 +37,23 @@ class CommonBindingAdapters @Inject constructor(val fragment: Fragment, val labe
         }
     }
 
+
+    @BindingAdapter("app:normalizedDate")
+    fun setDateText(textView: TextView, resource: String?) {
+        if(resource != null) {
+            Log.d("FragmentBindingAdapters", "RESID: ${resource}")
+            val dt = DateTime.parse(resource)
+            textView.setText(dt.toString("yyyy-MM-dd"))
+        }
+    }
+
     @BindingAdapter("app:normalizedDateTime")
-    fun setDateTimeText(textView: TextView, resource: String) {
-        Log.d("FragmentBindingAdapters", "RESID: ${resource}")
-        if(textView.id == R.id.tv_creation_date) {
+    fun setDateTimeText(textView: TextView, resource: String?) {
+        if(resource != null) {
+            Log.d("FragmentBindingAdapters", "RESID: ${resource}")
             val dt = DateTime.parse(resource)
             textView.setText(dt.toString("yyyy-MM-dd HH:mm:ss"))
         }
-        else
-            textView.setText(resource)
     }
 
     @BindingAdapter("app:labelsList")
@@ -51,5 +62,50 @@ class CommonBindingAdapters @Inject constructor(val fragment: Fragment, val labe
 
         labelsAdapter.updateList(resource)
         recyclerView.adapter = labelsAdapter
+    }
+
+    @BindingAdapter("app:numberToString")
+    fun setNumberAsString(textView: TextView, resource: Int) {
+        textView.setText(resource.toString())
+    }
+
+    @BindingAdapter("app:textIfNotNull")
+    fun setTextIfNotNull(textView: TextView, resource: String?) {
+        if(resource == null)
+            textView.visibility = View.GONE
+        else
+            textView.setText(resource.toString())
+    }
+
+    @BindingAdapter("app:numberIfNotNull")
+    fun setTextIfNotNull(textView: TextView, resource: Int?) {
+        if(resource == null)
+            textView.visibility = View.GONE
+        else
+            textView.setText(resource.toString())
+    }
+
+    @BindingAdapter("android:visibility")
+    fun setVisibility(view: View, resource: String?) {
+        if(resource.isNullOrBlank())
+            view.visibility = View.GONE
+        else
+            view.visibility = View.VISIBLE
+    }
+
+    @BindingAdapter("android:visibility")
+    fun setVisibilityInt(view: View, resource: Int?) {
+        if(resource == null)
+            view.visibility = View.GONE
+        else
+            view.visibility = View.VISIBLE
+    }
+
+    @BindingAdapter("app:favourite")
+    fun setFavorite(imageView: ImageView, resource: Boolean) {
+        if(resource)
+            imageView.setImageResource(R.drawable.ic_heart)
+        else
+            imageView.setImageResource(R.drawable.ic_heart_outline)
     }
 }

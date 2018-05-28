@@ -20,6 +20,26 @@ class ProjectsRepository @Inject constructor(
     private val projectsDao: ProjectsDao,
     private val userDao: UserDao) {
 
+    fun getProject(id: Int): LiveData<Resource<Project>> {
+        return object : NetworkBoundResource<Project, Project>(appExecutors) {
+
+            override fun saveCallResult(item: Project) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun shouldFetch(data: Project?): Boolean {
+                return false
+            }
+
+            override fun createCall() = projectsService.getProject(id)
+
+            override fun loadFromDb(): LiveData<Project> {
+                return projectsDao.get(id)
+
+            }
+
+        }.asLiveData()
+    }
 
 
     fun search(query: String): LiveData<Resource<List<Project>>> {

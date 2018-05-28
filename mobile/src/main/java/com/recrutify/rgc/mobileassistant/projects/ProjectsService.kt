@@ -25,4 +25,7 @@ interface ProjectsService {
             @Query("statuses") statuses: List<Int>,
             @Query("userAssigned") userAssigned: Int?): LiveData<ApiResponse<List<Project>>>
 
+    @GET("/project/{id}")
+    fun getProject(@Path("id") id: Int?): LiveData<ApiResponse<Project>>
+
 }

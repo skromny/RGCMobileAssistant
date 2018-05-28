@@ -81,9 +81,9 @@ internal class AppModule {
         return db.candidatesDao()
     }
 
-    @Singleton
-    @Provides
-    fun provideLabelAdapter(): LabelsAdapter {
-        return LabelsAdapter()
-    }
+//    @Singleton
+//    @Provides
+//    fun provideLabelAdapter(): LabelsAdapter {
+//        return LabelsAdapter()
+//    }
 }

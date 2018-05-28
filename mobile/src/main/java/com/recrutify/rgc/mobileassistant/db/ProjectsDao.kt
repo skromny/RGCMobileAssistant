@@ -41,7 +41,9 @@ abstract class ProjectsDao {
         }
     }
 
+    @Query("SELECT * FROM Project WHERE id = :projectId")
+    abstract fun get(projectId: Int): LiveData<Project>
+
     @Query("SELECT * FROM Project WHERE id in (:projectIds)")
     protected abstract fun loadById(projectIds: List<Int>): LiveData<List<Project>>
-
 }
